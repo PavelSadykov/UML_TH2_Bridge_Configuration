@@ -16,14 +16,14 @@ public:
 class DumpTruck : public Transport {
 public:
     void loadGoods() override {
-        std::cout << "Unloading bulk material from a Dumptruck" << std::endl;
+        std::cout << "Перевозка и разгрузка сыпучего материала  самосвалом " << std::endl;
     }
 };
 //класс автомобиль для перевозки мелких грузов
 class Car : public Transport {
 public:
     void loadGoods() override {
-        std::cout << "Unloading goods from car" << std::endl;
+        std::cout << "Перевозка и разгрузка мелкогабаритного груза автомобилем" << std::endl;
     }
 };
 
@@ -31,7 +31,7 @@ public:
 class FuelTanker : public Transport {
 public:
     void loadGoods() override {
-        std::cout << "Unloading Fuel from a FuelTanker" << std::endl;
+        std::cout << "Перевозка и разгрузка нефтепродуктов бензовозом" << std::endl;
     }
 };
 
@@ -53,7 +53,7 @@ public:
         transport_->loadGoods();
     }
     void storeGoods() override {
-        std::cout << "Storing bulk material in warehouse" << std::endl;
+        std::cout << "Прием и хранение  сыпучего материала на складе " << std::endl;
     }
 };
 //класс гараж для хранения мелких грузов
@@ -64,7 +64,7 @@ public:
         transport_->loadGoods();
     }
     void storeGoods() override {
-        std::cout << "Storing goods in garage" << std::endl;
+        std::cout << "Прием и хранение груза в гараже" << std::endl;
     }
 };
 //класс резервуар для хранения топлива
@@ -75,7 +75,7 @@ public:
         transport_->loadGoods();
     }
     void storeGoods() override {
-        std::cout << "Storing Fuel in tank" << std::endl;
+        std::cout << "Прием и хранение нефтепродуктов на нефтебазе" << std::endl;
     }
 };
 
@@ -105,7 +105,7 @@ private:
 
 
 int main(int argc, const char * argv[]) {
-    
+    int X=0,Y=0;
         Transport* truck = new DumpTruck ();
         Transport* car = new Car();
         Transport* tanker = new FuelTanker ();
@@ -113,12 +113,40 @@ int main(int argc, const char * argv[]) {
         Storage* garage = new Garage(car);
         Storage* storagetank = new StorageTank(tanker);
         StorageComposite* composite = new StorageComposite(truck);
-        composite->add(warehouse);
-        composite->add(garage);
-        composite->add(storagetank);
-        composite->receiveGoods();
-        composite->storeGoods();
+    do{
+        std::cout<<"\nВыберете тип груза, для логистической  обработки :"<< std::endl;
+        std::cout<<"1 - сыпучий груз"<<std::endl;
+        std::cout<<"2 - мелкогабаритный груз"<<std::endl;
+        std::cout<<"3 - нефтепродукты"<<std::endl;
+        std::cout<<"4 - завершение работы"<<std::endl;
+        std::cout<<"-->";
+        std::cin>>Y;
+        switch (Y) {
+            case 1:
+                composite->add(warehouse);
+                composite->receiveGoods();
+                composite->storeGoods();
+                break;
+            case 2:
+                composite->add(garage);
+                composite->receiveGoods();
+                composite->storeGoods();
+                break;
+            case 3:
+                composite->add(storagetank);
+                composite->receiveGoods();
+                composite->storeGoods();
+                break;
+            case 4:
+                std::cout<<"Работа завершена"<<std::endl;
+                exit(0);
+                break;
+            default:
+                std::cout<<"Введите корректное значение"<<std::endl;
+                break;
+        }
        
+    } while(X!=5);
 
     return 0;
 }
